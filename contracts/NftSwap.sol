@@ -22,7 +22,6 @@ contract NFTSwap {
 
     mapping(address => mapping(uint256 => NFTSwapInfo)) private _userNFTSwaps;
     mapping(uint256 => address) private _nftOwners;
-    mapping(address => address) private _inputTokenPriceFeeds;
     mapping(address => NFTCollectionInfo) private _nftCollection;
 
     constructor() {
@@ -52,7 +51,6 @@ contract NFTSwap {
 
         _userNFTSwaps[msg.sender][tokenId] = NFTSwapInfo(inputToken, amount, true);
         _nftOwners[tokenId] = msg.sender;
-        _inputTokenPriceFeeds[inputToken] = priceFeedAddress;
 
         ERC721(msg.sender).transferFrom(msg.sender, address(this), tokenId);
         IERC20(inputToken).transferFrom(msg.sender, address(this), amount);
