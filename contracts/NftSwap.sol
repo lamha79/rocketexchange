@@ -3,7 +3,6 @@ pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract NFTSwap {
     address private _owner;
@@ -12,16 +11,18 @@ contract NFTSwap {
     struct NFTSwapInfo {
         address swappedTokenType;
         uint256 amount;
-        bool isActive;
+        bool isExpired;
     }
 
     struct NFTCollectionInfo {
-        address swapTokenType;
         uint256 amount;
+        address swapTokenType;
+        bool isActive;
     }
 
     mapping(address => mapping(uint256 => NFTSwapInfo)) private _userNFTSwaps;
     mapping(uint256 => address) private _nftOwners;
+    mapping(address => address) private _inputTokenPriceFeeds;
     mapping(address => NFTCollectionInfo) private _nftCollection;
 
     constructor() {
@@ -38,18 +39,20 @@ contract NFTSwap {
         _owner = newOwner;
     }
 
-    function swapNFTToToken(uint256 tokenId, address inputToken, address priceFeedAddress) external {
+    function swapNFTToToken(uint256 tokenId, address inputToken, address priceFeedAddress) payable external {
         require(_nftOwners[tokenId] == address(0), "NFT already deposited");
         require(priceFeedAddress != address(0), "Invalid price feed address");
 
-        uint256 swapPrice = getLatestTokenPrice(priceFeedAddress);
         // TODO: get amount from the collection
-        uint256 amount = 1 //getSwapAmount(_nftCollection[inputToken].swapTokenType, tokenId); // Retrieve amount from NFT token contract
+        uint256 amount = getSwapAmount(_nftCollection[inputToken].swapTokenType, tokenId); // Retrieve amount from NFT token contract
 
-        require(amount <= swapPrice, "Invalid amount");
+        require(amount > 0, "Invalid swap amount");
+        // TODO check type of the token
+        require(msg.value >= amount, "Invalid swap amount");
 
         _userNFTSwaps[msg.sender][tokenId] = NFTSwapInfo(inputToken, amount, true);
         _nftOwners[tokenId] = msg.sender;
+        _inputTokenPriceFeeds[inputToken] = priceFeedAddress;
 
         ERC721(msg.sender).transferFrom(msg.sender, address(this), tokenId);
         IERC20(inputToken).transferFrom(msg.sender, address(this), amount);
@@ -60,7 +63,7 @@ contract NFTSwap {
         require(_nftOwners[tokenId] == msg.sender, "You don't own this NFT");
 
         NFTSwapInfo storage swapInfo = _userNFTSwaps[msg.sender][tokenId];
-        require(swapInfo.isActive, "NFT is not active");
+        require(!swapInfo.isExpired, "NFT swap is expired");
 
         uint256 amount = swapInfo.amount;
         address nftOwner = _nftOwners[tokenId];
@@ -77,23 +80,25 @@ contract NFTSwap {
         _tokenPools[inputToken] -= amount; // Update token pool
     }
 
-    function getSwapInfo(address user, uint256 tokenId) external view returns (address swappedTokenType, uint256 amount, bool isActive) {
+    function getSwapInfo(address user, uint256 tokenId) external view returns (address swappedTokenType, uint256 amount, bool isExpired) {
         NFTSwapInfo storage swapInfo = _userNFTSwaps[user][tokenId];
-        return (swapInfo.swappedTokenType, swapInfo.amount, swapInfo.isActive);
+        return (swapInfo.swappedTokenType, swapInfo.amount, swapInfo.isExpired);
     }
 
     function getTokenPool(address token) external view returns (uint256) {
         return _tokenPools[token];
     }
 
-    function getLatestTokenPrice(address priceFeedAddress) internal view returns (uint256) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(priceFeedAddress);
-        (, int256 price, , , ) = priceFeed.latestRoundData();
-        require(price > 0, "Invalid token price");
-        return uint256(price);
+    function getSwapAmount(address swapTokenType, uint256 tokenId) internal view returns (uint256) {
+        // TODO
+        return 0;
     }
 
-    function getNFTMinter(uint256 tokenId) external view returns (address) {
-        return ERC721(msg.sender).creatorOf(tokenId);
+    // function getNFTMinter(uint256 tokenId) external view returns (address) {
+    //     return ERC721(msg.sender).creatorOf(tokenId);
+    // }
+
+    function updateNFTCollection(address nftToken, uint256 amount, address swapTokenType, bool isActive) external onlyOwner {
+        _nftCollection[nftToken] = NFTCollectionInfo(amount, swapTokenType, isActive);
     }
 }
