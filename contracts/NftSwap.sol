@@ -7,15 +7,22 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract NFTSwap {
     address private _owner;
+    mapping(address => uint256) private _tokenPools;
 
     struct NFTSwapInfo {
-        uint256 swapPrice;
+        address swappedTokenType;
+        uint256 amount;
         bool isActive;
+    }
+
+    struct NFTCollectionInfo {
+        address swapTokenType;
+        uint256 amount;
     }
 
     mapping(address => mapping(uint256 => NFTSwapInfo)) private _userNFTSwaps;
     mapping(uint256 => address) private _nftOwners;
-    mapping(address => address) private _inputTokenPriceFeeds;
+    mapping(address => NFTCollectionInfo) private _nftCollection;
 
     constructor() {
         _owner = msg.sender;
@@ -36,26 +43,47 @@ contract NFTSwap {
         require(priceFeedAddress != address(0), "Invalid price feed address");
 
         uint256 swapPrice = getLatestTokenPrice(priceFeedAddress);
-        _userNFTSwaps[msg.sender][tokenId] = NFTSwapInfo(swapPrice, true);
+        // TODO: get amount from the collection
+        uint256 amount = 1 //getSwapAmount(_nftCollection[inputToken].swapTokenType, tokenId); // Retrieve amount from NFT token contract
+
+        require(amount <= swapPrice, "Invalid amount");
+
+        _userNFTSwaps[msg.sender][tokenId] = NFTSwapInfo(inputToken, amount, true);
         _nftOwners[tokenId] = msg.sender;
-        _inputTokenPriceFeeds[inputToken] = priceFeedAddress;
 
         ERC721(msg.sender).transferFrom(msg.sender, address(this), tokenId);
-        IERC20(inputToken).transferFrom(msg.sender, address(this), swapPrice);
+        IERC20(inputToken).transferFrom(msg.sender, address(this), amount);
+        _tokenPools[inputToken] += amount; // Update token pool
     }
 
-    function swapTokenToNFT(uint256 tokenId) external {
+    function swapTokenToNFT(uint256 tokenId) external payable {
         require(_nftOwners[tokenId] == msg.sender, "You don't own this NFT");
+
+        NFTSwapInfo storage swapInfo = _userNFTSwaps[msg.sender][tokenId];
+        require(swapInfo.isActive, "NFT is not active");
+
+        uint256 amount = swapInfo.amount;
+        address nftOwner = _nftOwners[tokenId];
+        address inputToken = swapInfo.swappedTokenType;
+
+        require(msg.value == amount, "Incorrect token amount sent");
+        require(inputToken == ERC721(msg.sender).ownerOf(tokenId), "Invalid token type");
 
         delete _nftOwners[tokenId];
         delete _userNFTSwaps[msg.sender][tokenId];
 
         ERC721(msg.sender).transferFrom(address(this), msg.sender, tokenId);
+        payable(nftOwner).transfer(amount);
+        _tokenPools[inputToken] -= amount; // Update token pool
     }
 
-    function getSwapInfo(address user, uint256 tokenId) external view returns (uint256 swapPrice, bool isActive) {
+    function getSwapInfo(address user, uint256 tokenId) external view returns (address swappedTokenType, uint256 amount, bool isActive) {
         NFTSwapInfo storage swapInfo = _userNFTSwaps[user][tokenId];
-        return (swapInfo.swapPrice, swapInfo.isActive);
+        return (swapInfo.swappedTokenType, swapInfo.amount, swapInfo.isActive);
+    }
+
+    function getTokenPool(address token) external view returns (uint256) {
+        return _tokenPools[token];
     }
 
     function getLatestTokenPrice(address priceFeedAddress) internal view returns (uint256) {
@@ -63,5 +91,9 @@ contract NFTSwap {
         (, int256 price, , , ) = priceFeed.latestRoundData();
         require(price > 0, "Invalid token price");
         return uint256(price);
+    }
+
+    function getNFTMinter(uint256 tokenId) external view returns (address) {
+        return ERC721(msg.sender).creatorOf(tokenId);
     }
 }
