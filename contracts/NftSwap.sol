@@ -52,9 +52,14 @@ contract NFTSwap {
         _userNFTSwaps[msg.sender][tokenId] = NFTSwapInfo(inputToken, amount, true);
         _nftOwners[tokenId] = msg.sender;
 
+        // Lấy nft của user gửi vô sm (mình) 
         ERC721(msg.sender).transferFrom(msg.sender, address(this), tokenId);
+        
+        // Mimh gửi Token (LINK, ETH...) cho user
         IERC20(inputToken).transferFrom(msg.sender, address(this), amount);
-        _tokenPools[inputToken] += amount; // Update token pool
+        
+        // Cập nhật lại pool
+        _tokenPools[inputToken] -= amount; // Update token pool
     }
 
     function swapTokenToNFT(uint256 tokenId) external payable {
@@ -75,7 +80,7 @@ contract NFTSwap {
 
         ERC721(msg.sender).transferFrom(address(this), msg.sender, tokenId);
         payable(nftOwner).transfer(amount);
-        _tokenPools[inputToken] -= amount; // Update token pool
+        _tokenPools[inputToken] += amount; // Update token pool
     }
 
     function getSwapInfo(address user, uint256 tokenId) external view returns (address swappedTokenType, uint256 amount, bool isExpired) {
