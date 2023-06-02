@@ -1,4 +1,4 @@
-# @my-app/react-app
+# @rocketswap/react-app
 
 This package is a fork of the default app built with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -1,6 +1,6 @@
 
 import { Contract } from "@ethersproject/contracts";
-import { abis } from "@my-app/contracts";
+import { abis } from "@rocketswap/contracts";
 import { useCall } from "@usedapp/core";
 import { parseUnits } from "ethers/lib/utils";
 import { useEffect } from "react";

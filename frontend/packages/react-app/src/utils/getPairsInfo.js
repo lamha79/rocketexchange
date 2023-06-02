@@ -1,4 +1,4 @@
-import { abis } from "@my-app/contracts";
+import { abis } from "@rocketswap/contracts";
 
 export async function getPairsInfo(pairAddresses, web3) {
   const pairsInfo = [];

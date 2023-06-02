@@ -1,4 +1,4 @@
-import { abis } from "@my-app/contracts";
+import { abis } from "@rocketswap/contracts";
 import { getPairsInfo } from "./getPairsInfo";
 
 export const getFactoryInfo = async (factoryAddress, web3) => {
