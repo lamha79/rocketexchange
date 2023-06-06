@@ -12801,6 +12801,7 @@ img.mfp-img {
   font-size: 20px;
   margin-top: 23px;
 }
+
 @media only screen and (max-width: 1024px) {
   .page-title .content {
     padding: 0 70px;
