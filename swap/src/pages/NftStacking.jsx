@@ -5,6 +5,7 @@ import teamv04 from "../assets/images/team-v04.png";
 import nftimage from "../assets/images/nftimage.jpg";
 import author from "../assets/images/author.jpg";
 import topic4 from "../assets/images/topics-4.png";
+import NftCard from "../components/ui/Nft-card/NftCard";
 
 
 const NftStacking = () => {
@@ -15,22 +16,8 @@ const NftStacking = () => {
 
     return (
         <>
-            <CommonSection title={"Rocket Staking NFT Liquidity 2.0"} />
-
-            <section className="page-title">
-                <Container>
-                    <Row>
-                        <Col lg="12">
-                            <div className="content">
-                                <h2 className="title">NFT Stacking</h2>
-                                <p className="desc">Please send your NFT here to receive 1 token</p>
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>               
-            </section>
-
-            
+            <CommonSection title={"NFT Stacking"} slogan={"Please send your NFT here to receive 1 token"} />            
+            <NftCard/>
         </>
         
     )

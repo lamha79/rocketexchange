@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import HeroSection from "../components/ui/HeroSection";
-import LiveAuction from "../components/ui/Live-auction/LiveAuction";
+
 
 const Home = ({ isSignedIn, nftMarketplace, wallet }) => {
   useEffect(() => {
@@ -10,11 +10,6 @@ const Home = ({ isSignedIn, nftMarketplace, wallet }) => {
   return (
     <>
       <HeroSection />
-      <LiveAuction
-        isSignedIn={isSignedIn}
-        nftMarketplace={nftMarketplace}
-        wallet={wallet}
-      />
       {/* <SellerSection /> */}
       {/* <Trending /> */}
       {/* <StepSection /> */}
