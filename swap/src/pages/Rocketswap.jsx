@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react"
 
 import CommonSection from "../components/ui/Common-section/CommonSection"
-import { Container, Row, Col } from "reactstrap"
+import { Container, Row } from "reactstrap"
 
-const Contact = () => {
+const Rocketswap = () => {
     const nameRef = useRef("")
     const emailRef = useRef("")
     const subjectRef = useRef("")
@@ -20,21 +20,18 @@ const Contact = () => {
 
     return (
         <>
-            <CommonSection tittle="Contact" />
+            <CommonSection tittle="Rocketswap" />
             <section>
                 <Container>
                     <Row>
                         <section
                             class="page-title"
-                            style="padding-top: 50px;padding-bottom: 0;"
                         >
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div
-                                            class="content"
-                                            style="padding: 0 388px;"
-                                        >
+                                            class="content">
                                             <h2 class="title">
                                                 Rocketswap NFT Liquidity 2.0
                                             </h2>
@@ -49,10 +46,8 @@ const Contact = () => {
                         </section>
 
                         <section
-                            class="blog-page-2"
-                            style="padding: 20px 0 20px;"
-                        >
-                            <div class="body" style="min-height: 0px;">
+                            class="blog-page-2">
+                            <div class="body">
                                 <div class="swapContainer">
                                     <div class="swapHeader">
                                         <span class="swapText">Swap</span>
@@ -122,6 +117,6 @@ const Contact = () => {
             </section>
         </>
     )
-}
+};
 
-export default Contact
+export default Rocketswap

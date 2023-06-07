@@ -3,6 +3,7 @@ import React from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
 import Home from "../pages/Home"
+import Rocketswap from "../pages/Rocketswap"
 
 const Routers = () => {
     return (
@@ -12,6 +13,12 @@ const Routers = () => {
                 path="/home"
                 element={
                     <Home />
+                }
+            />
+            <Route
+                path="/swap"
+                element={
+                    <Rocketswap />
                 }
             />
         </Routes>

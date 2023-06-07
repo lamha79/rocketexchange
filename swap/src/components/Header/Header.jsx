@@ -134,55 +134,14 @@ const Header = () => {
                         <div class="header__right">
                             <nav id="main-nav" class="main-nav">
                                 <ul id="menu-primary-menu" class="menu">
-                                    <li class="menu-item menu-item-has-children current-menu-item">
-                                        <a href="#">Home Page</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="index-2">Home Main</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item menu-item-has-children">
-                                        <a href="#">Home Dashboad</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="dashboard-tokensales">Token Sales</a></li>
-                                            <li class="menu-item"><a href="dashboard-roadmap">Road Map</a></li>
-                                            <li class="menu-item"><a href="dashboard-team">Our Team</a></li>
-                                            <li class="menu-item"><a href="dashboard-faq">FaQs</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item menu-item-has-children">
-                                        <a href="#">NFT Stacking And Swap Token</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="swap">SwapToken</a></li>
-                                            <li class="menu-item"><a href="blog-v2">NFT Stacking</a></li>
-                                        </ul>
+                                    <li class="menu-item current-menu-item">
+                                        <Link to='/home'>Home</Link>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="connect-wallet">Connect Wallet</a>
+                                        <Link to='/nftswap'>NFT Stacking</Link>
                                     </li>
-                                    <li class="menu-item menu-item-has-children">
-                                        <a href="#">More</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="about-us">About Us</a></li>
-                                            <li class="menu-item"><a href="features">Features</a></li>
-                                            <li class="menu-item"><a href="roadmap">Road Map</a></li>
-                                            <li class="menu-item"><a href="document">Documents</a></li>
-                                            <li class="menu-item"><a href="our-team">Our Team</a></li>
-                                            <li class="menu-item"><a href="partner">Partner</a></li>
-                                            <li class="menu-item"><a href="token-sales">Token Sale</a></li>
-                                            <li class="menu-item"><a href="button">Function</a></li>
-                                            
-                                            <li class="menu-item"><a href="footer">Contact</a></li>
-                                            
-                                            
-                                            <li class="menu-item"><a href="faq">Faq</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item menu-item-has-children">
-                                        <a href="#">Sign</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="sign-in">Sign In</a></li>
-                                            <li class="menu-item"><a href="sign-up">Sign Up</a></li>
-                                        </ul>
+                                    <li class="menu-item">
+                                        <Link to='/swap'>Swap</Link>
                                     </li>
                                 </ul>
                             </nav>
