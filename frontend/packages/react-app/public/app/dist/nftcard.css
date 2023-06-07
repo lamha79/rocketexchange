@@ -34,12 +34,15 @@
   gap: 1rem;
   padding: 1.5rem;
 }
-.header {
+.nftheader {
   position: relative;
   cursor: pointer;
 }
-.main-img {
+.nft-main-img {
   border-radius: 1rem;
+  height: 80%;
+  width: 100%;
+  padding-bottom: 1.5em;
 }
 .nftoverlay {
   background-color: var(--Cyan);
@@ -52,15 +55,15 @@
   border-radius: 1rem;
   display: none;
 }
-.view {
+.nftview {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
 }
-.header:hover .overlay,
-.header:hover .view {
+.nftheader:hover .overlay,
+.nftheader:hover .nftview {
   display: block;
 }
 .nftmain {
@@ -81,15 +84,21 @@
   line-height: 30px;
   font-weight: 300;
 }
-.icons {
+.nfticons {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 1.5em;
 }
-.icons div {
+.nfticons div {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.nft-icon-img{
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
 }
 .eth {
   color: var(--Cyan);

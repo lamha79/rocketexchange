@@ -12812,5 +12812,10 @@ img.mfp-img {
     padding: 0;
   }
 }
+#site-logo {
+  height: 8vh;
+  width: 4.6vw;
+  border-radius: 100%;
+}
 
 /*# sourceMappingURL=app.css.map */
