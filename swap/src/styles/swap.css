@@ -213,3 +213,18 @@ body {
   padding-left: 0px !important;
   padding-top: 14px;
 }
+
+.container span {
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.98rem;
+  color: #fff;
+}
+
+.blog-page-2 {
+  padding: 0px;
+}
+
+.blog-page-2 .body {
+  min-height: 42vh;
+}
