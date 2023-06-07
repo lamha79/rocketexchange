@@ -4,11 +4,11 @@ import teamv04 from "../images/team-v04.png";
 import nftimage from "../images/nftimage.jpg";
 import author from "../images/author.jpg";
 import topic4 from "../images/topics-4.png";
-import SaleModal from "../Modal/SaleModal";
+import Modal from "../Modal/Modal";
 
 
 const NftCard = () => {
-  const [showSaleModal, setShowSaleModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
       <section>
@@ -46,7 +46,7 @@ const NftCard = () => {
                           
                       <div className="swapBtn">
                         <button id="swapButton"
-                        onClick={() => setShowSaleModal(true)}>
+                        onClick={() => setShowModal(true)}>
                           Swap
                         </button>
                       </div>
@@ -54,9 +54,9 @@ const NftCard = () => {
                 </div>
             </section>
 
-            {showSaleModal && (
-              <SaleModal
-                setShowModal={setShowSaleModal}
+            {showModal && (
+              <Modal
+                setShowModal={setShowModal}
               />
             )}
     </>
