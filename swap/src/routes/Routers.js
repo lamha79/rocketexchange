@@ -6,6 +6,7 @@ import Home from "../pages/Home"
 import RocketSwap from "../pages/RocketSwap"
 import Contact from "../pages/Contact"
 import NftStacking from "../pages/NftStacking"
+import Admin from "../pages/Admin"
 
 const Routers = () => {
     return (
@@ -15,6 +16,7 @@ const Routers = () => {
             <Route path="/swap" element={<RocketSwap />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/stacking" element={<NftStacking />} />
+            <Route path="/admin" element={<Admin />} />
         </Routes>
     )
 }

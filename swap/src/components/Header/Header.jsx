@@ -63,6 +63,9 @@ const Header = () => {
                         <li className="menu-item">
                           <Link to='/contact'>Contact</Link>
                         </li>
+                        <li className="menu-item">
+                          <Link to='/admin'>Admin</Link>
+                        </li>
                       </ul>
                     </nav>
                     <div className="group-button">
