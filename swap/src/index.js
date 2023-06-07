@@ -11,7 +11,7 @@ window.onload = async () => {
   ReactDOM.render(
     <React.StrictMode>
       <HashRouter>
-        <App />
+        <App test="abc" />
       </HashRouter>
     </React.StrictMode>,
     document.getElementById("root")

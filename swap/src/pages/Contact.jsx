@@ -21,7 +21,7 @@ const Contact = () => {
 
   return (
     <>
-      <CommonSection tittle='Contact' />
+      <CommonSection tittle={"Contact"} />
       <section>
         <Container>
           <Row>

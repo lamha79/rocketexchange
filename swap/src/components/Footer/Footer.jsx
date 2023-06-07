@@ -1,116 +1,99 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
-import "./footer.css";
-
-const MY__ACCOUNT = [
-  {
-    display: "Author Profile",
-    url: "/profile",
-  },
-  {
-    display: "Create Item",
-    url: "/create",
-  },
-  {
-    display: "Collection",
-    url: "/market",
-  },
-];
-
-const RESOURCES = [
-  {
-    display: "Help Center",
-    url: "#",
-  },
-  {
-    display: "Partner",
-    url: "#",
-  },
-  {
-    display: "Community",
-    url: "#",
-  },
-  {
-    display: "Activity",
-    url: "#",
-  },
-];
-
-const COMPANY = [
-  {
-    display: "About",
-    url: "#",
-  },
-  {
-    display: "Career",
-    url: "#",
-  },
-  {
-    display: "Ranking",
-    url: "#",
-  },
-  {
-    display: "Contact Us",
-    url: "/contact",
-  },
-];
+import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap"
+import "./footer.css"
 
 const Footer = () => {
-  const [date, setDate] = useState();
-  const getYear = () => setDate(new Date().getFullYear());
+    const [date, setDate] = useState()
+    const getYear = () => setDate(new Date().getFullYear())
 
-  useEffect(() => {
-    getYear();
-  }, []);
+    useEffect(() => {
+        getYear()
+    }, [])
 
-  return (
-    <footer className="footer">
-      <Container>
-        <Row>
-        <footer class="footer style-2">
-        <div class="footer__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="content">
-                            <h3 class="">Don't miss out</h3>
-                            <form action="#" id="subscribe-form">
-                                <input type="email" placeholder="Enter your email" required="" id="subscribe-email" />
-                                <button class="btn-action s2" type="submit" id="subscribe-button"> <span class="effect">SUBSCRIBE</span></button>
-                            </form>
-                            <p>Don’t hesitate to subscribe to latest news about ICo markets as well as crucial financial knowledge to become successful investors globally</p>
-                            <ul class="list-social">
-                                <li><a href="#"><span class="icon-twitter"></span></a></li>
-                                <li><a href="#"><span class="icon-facebook"></span></a></li>
-                                <li><a href="#"><span class="icon-place"></span></a></li>
-                                <li><a href="#"><span class="icon-youtobe"></span></a></li>
-                                <li><a href="#"><span class="icon-tiktok"></span></a></li>
-                                <li><a href="#"><span class="icon-reddit"></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        
-                    </div>
-                </div>
+    return (
+        <footer className="footer style-2">
+            <div className="footer__top">
+                <Container>
+                    <Row>
+                        <Col lg="12">
+                            <div className="content">
+                                <h3 className="">Don't miss out</h3>
+                                <form action="#" id="subscribe-form">
+                                    <input
+                                        type="email"
+                                        placeholder="Enter your email"
+                                        required=""
+                                        id="subscribe-email"
+                                    />
+                                    <button
+                                        className="btn-action s2"
+                                        type="submit"
+                                        id="subscribe-button"
+                                    >
+                                        {" "}
+                                        <span className="effect">
+                                            SUBSCRIBE
+                                        </span>
+                                    </button>
+                                </form>
+                                <p>
+                                    Don’t hesitate to subscribe to latest news
+                                    about ICo markets as well as crucial
+                                    financial knowledge to become successful
+                                    investors globally
+                                </p>
+                                <ul className="list-social">
+                                    <li>
+                                        <Link to="#">
+                                            <span className="icon-twitter"></span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="#">
+                                            <span className="icon-facebook"></span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="#">
+                                            <span className="icon-place"></span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="#">
+                                            <span className="icon-youtobe"></span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="#">
+                                            <span className="icon-tiktok"></span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="#">
+                                            <span className="icon-reddit"></span>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </Col>
+                        <Col className="md-5"></Col>
+                    </Row>
+                </Container>
             </div>
-        </div>
-        <div class="footer__bottom center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>© 2023. All rights reserved by Rocket Exchange</p>
-                    </div>
-                </div>
+            <div className="footer__bottom center">
+                <Container>
+                    <Row>
+                        <Col lg="12">
+                            <p>
+                                © 2023. All rights reserved by Rocket Exchange
+                            </p>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
-        </div>
-    </footer>
-    <a id="scroll-top"></a>
-        </Row>
-      </Container>
-    </footer>
-  );
-};
+        </footer>
+    )
+}
 
-export default Footer;
+export default Footer

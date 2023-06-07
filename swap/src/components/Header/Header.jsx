@@ -1,30 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container } from "reactstrap";
 import "./header.css";
-
-const NAV__LINKS = [
-  {
-    display: "BNB",
-    url: "/bnbchain",
-  },
-  {
-    display: "ETH",
-    url: "/ethchain",
-  },
-  {
-    display: "POLY",
-    url: "/polychain",
-  },
-  {
-    display: "FTM",
-    url: "/ftmchain",
-  },
-  {
-    display: "DC",
-    url: "/dcchain",
-  },
-];
 
 const Header = () => {
   const headerRef = useRef(null);
@@ -98,10 +75,10 @@ const Header = () => {
     <header className="header" ref={headerRef}>
       <Container>
       
-    {/* <div class="preloader">
-        <div class=" loader">
-            <div class="square"></div>
-            <div class="path">
+    {/* <div className ="preloader">
+        <div className =" loader">
+            <div className ="square"></div>
+            <div className ="path">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -110,19 +87,19 @@ const Header = () => {
                 <div></div>
                 <div></div>
             </div>
-          <p class="text-load">Loading :</p>
+          <p className ="text-load">Loading :</p>
         </div>
     </div> 
     
-		<div class="mouse-cursor cursor-outer"></div>
-		<div class="mouse-cursor cursor-inner"></div> */}
+		<div className ="mouse-cursor cursor-outer"></div>
+		<div className ="mouse-cursor cursor-inner"></div> */}
 
-    <header id="header_main" class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="header__body">
-                        <div class="header__logo">
+    <header id="header_main" className ="header">
+        <div className ="container">
+            <div className ="row">
+                <div className ="col-12">
+                    <div className ="header__body">
+                        <div className ="header__logo">
                             <a href="index-2">
                                 <img id="site-logo" src="/public/assets/images/logo/rocketlogo.jpg"
                                 alt="ICOLand" width="165" height="40"
@@ -131,26 +108,26 @@ const Header = () => {
                             </a>
                         </div>
 
-                        <div class="header__right">
-                            <nav id="main-nav" class="main-nav">
-                                <ul id="menu-primary-menu" class="menu">
-                                    <li class="menu-item current-menu-item">
+                        <div className ="header__right">
+                            <nav id="main-nav" className ="main-nav">
+                                <ul id="menu-primary-menu" className ="menu">
+                                    <li className ="menu-item current-menu-item">
                                         <Link to='/home'>Home</Link>
                                     </li>
-                                    <li class="menu-item">
+                                    <li className ="menu-item">
                                         <Link to='/nftswap'>NFT Stacking</Link>
                                     </li>
-                                    <li class="menu-item">
+                                    <li className ="menu-item">
                                         <Link to='/swap'>Swap</Link>
                                     </li>
                                 </ul>
                             </nav>
-                            <div class="group-button">
-                                <a class="btn-action" href="sign-in">
+                            <div className ="group-button">
+                                <a className ="btn-action" href="sign-in">
                                     <span>Wallet Connect</span>
                                 </a>
                             </div>
-                            <div class="mobile-button"><span></span></div>
+                            <div className ="mobile-button"><span></span></div>
                         </div>
                     </div>
                 </div>
