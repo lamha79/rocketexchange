@@ -1,5 +1,4 @@
 import React,{useRef,useEffect} from 'react';
-
 import CommonSection from '../components/ui/Common-section/CommonSection';
 import { Container, Row, Col } from "reactstrap";
 

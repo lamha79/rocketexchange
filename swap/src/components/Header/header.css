@@ -125,5 +125,9 @@
     .btn a {
       font-size: 0.7rem !important;
     }
+
+    .btn-action {
+      height: 40%;
+    }
   }
   
