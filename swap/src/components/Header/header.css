@@ -75,6 +75,17 @@
     font-size: 1.3rem;
     display: none;
   }
+
+  #site-logo {
+    height: 8vh;
+    width: 4.6vw;
+    border-radius: 100%;
+    border: 1.5px solid #e250e5;
+  }
+
+  .header__logo {
+    padding-top: 1.5em;
+  }
   
   @media only screen and (max-width: 768px) {
     .nav__menu {

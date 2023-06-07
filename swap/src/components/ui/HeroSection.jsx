@@ -12,17 +12,7 @@ const HeroSection = () => {
         <Row>
           <Col lg="6" md="6">
             <div className="hero__content">
-              {/* <h2>
-                Chương trình phân tích token{" "}
-                <span>BNB, ETH, POLY, FTM và DC Chain miễn phí</span>
-              </h2>
-              <p>
-                Cảnh báo: trang web này giúp bạn xác định xem hợp đồng thông
-                minh có thể là lừa đảo hay không ? Không có đảm bảo 100%. Chúng
-                tôi đang cố gắng làm hết sức mình để phát hiện tất cả các trò
-                gian lận nhưng chúng tôi không thể chịu trách nhiệm cho một trò
-                gian lận cụ thể ... Hãy luôn cẩn thận với tiền của bạn.
-              </p> */}
+              {}
               <h2>
                 Free Token Analyzer Program{" "}
                 <span>BNB, ETH, POLY, FTM & DC Chain</span>

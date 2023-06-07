@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "reactstrap";
 import "./header.css";
+import rocketlogo from "../../assets/images/logo.jpg"
 
 const Header = () => {
   const headerRef = useRef(null);
@@ -101,8 +102,8 @@ const Header = () => {
                     <div className ="header__body">
                         <div className ="header__logo">
                             <a href="index-2">
-                                <img id="site-logo" src="/public/assets/images/logo/rocketlogo.jpg"
-                                alt="ICOLand" width="165" height="40"
+                                <img id="site-logo" src={rocketlogo}
+                                alt="ICOLand" 
                                 data-retina="/public/assets/images/logo/logo-main@x2.png" data-width="165"
                                 data-height="40" />
                             </a>
@@ -111,14 +112,17 @@ const Header = () => {
                         <div className ="header__right">
                             <nav id="main-nav" className ="main-nav">
                                 <ul id="menu-primary-menu" className ="menu">
-                                    <li className ="menu-item current-menu-item">
+                                    <li className ="menu-item">
                                         <Link to='/home'>Home</Link>
                                     </li>
                                     <li className ="menu-item">
-                                        <Link to='/nftswap'>NFT Stacking</Link>
+                                        <Link to='/stacking'>NFT Stacking</Link>
                                     </li>
                                     <li className ="menu-item">
                                         <Link to='/swap'>Swap</Link>
+                                    </li>
+                                    <li className ="menu-item">
+                                        <Link to='/contact'>Contact</Link>
                                     </li>
                                 </ul>
                             </nav>

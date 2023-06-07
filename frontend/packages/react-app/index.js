@@ -14,8 +14,8 @@ app.get("/about-us", (req, res)=>{
     res.render("about-us");
 });
 
-app.get("/swap", (req, res)=>{
-    res.render("rocketswap");
+app.get("/blog-v1", (req, res)=>{
+    res.render("blog-v1");
 });
 
 app.get("/blog-v2", (req, res)=>{
@@ -58,7 +58,7 @@ app.get("/features", (req, res)=>{
     res.render("features");
 });
 
-app.get("/features", (req, res)=>{
+app.get("/footer", (req, res)=>{
     res.render("footer");
 });
 
