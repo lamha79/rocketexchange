@@ -4,8 +4,8 @@ import { Container, Row, Col } from "reactstrap";
 import "../styles/swap.css";
 
 const Admin = () => {
-    // const addressRef = useRef("");
-    // const priceRef = useRef("");
+    const addressRef = useRef("");
+    const priceRef = useRef("");
     
   
     const handleSubmit = (e) => {
@@ -28,18 +28,18 @@ const Admin = () => {
                     <form onSubmit={handleSubmit}>
                     <div className="form_input">
                         <input 
-                        type="text" 
-                        placeholder='Address Collection:' 
-                        // ref={addressRef}
+                            type="text" 
+                            placeholder='Address Collection:' 
+                            ref={addressRef}
                         />
                     </div>
                     <button 
                         className="send__btn" 
                         style={{
-                        border:'none', 
-                        padding:'7px 25px', 
-                        borderRadius:'5px',
-                        marginTop:'20px',
+                            border:'none', 
+                            padding:'7px 25px', 
+                            borderRadius:'5px',
+                            marginTop:'20px',
                         }}
                     >
                         Add Adress
@@ -70,10 +70,10 @@ const Admin = () => {
                     <button 
                         className="send__btn" 
                         style={{
-                        border:'none', 
-                        padding:'7px 25px', 
-                        borderRadius:'5px',
-                        marginTop:'20px',
+                            border:'none', 
+                            padding:'7px 25px', 
+                            borderRadius:'5px',
+                            marginTop:'20px',
                         }}
                     >
                         Accept
@@ -87,18 +87,18 @@ const Admin = () => {
                     <form onSubmit={handleSubmit}>
                     <div className="form_input">
                         <input 
-                        type="text" 
-                        placeholder='Price collection:' 
-                        // ref={priceRef}
+                            type="text" 
+                            placeholder='Price collection:' 
+                            ref={priceRef}
                         />
                     </div>
                     <button 
                         className="send__btn" 
                         style={{
-                        border:'none', 
-                        padding:'7px 25px', 
-                        borderRadius:'5px',
-                        marginTop:'20px',
+                            border:'none', 
+                            padding:'7px 25px', 
+                            borderRadius:'5px',
+                            marginTop:'20px',
                         }}
                     >
                         Accept
@@ -108,10 +108,10 @@ const Admin = () => {
                 <button 
                         className="send__btn" 
                         style={{
-                        border:'none', 
-                        padding:'7px 25px', 
-                        borderRadius:'5px',
-                        marginTop:'20px',
+                            border:'none', 
+                            padding:'7px 25px', 
+                            borderRadius:'5px',
+                            marginTop:'20px',
                         }}
                     >
                         Add Collection

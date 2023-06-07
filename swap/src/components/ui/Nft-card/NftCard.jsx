@@ -21,6 +21,7 @@ const NftCard = () => {
                               alt="img"
                               className="nft-main-img"
                               />
+                            </div>
                           <div className="nftmain">
                               <h2 className="nfttitle">NFT name</h2>
                               <p className="nftcontent">
@@ -37,13 +38,12 @@ const NftCard = () => {
                                   <span></span>
                               </div>
                           </div>
-                      </div>
-                      <div className="nftdivider"></div>
                           <div className="nftfooter">
                               <img src={author} alt="avatar" />
                               <p>Owned by <b>[author]</b></p>
                           </div>
                       </div>
+                          
                       <div className="swapBtn">
                         <button id="swapButton"
                         onClick={() => setShowSaleModal(true)}>
