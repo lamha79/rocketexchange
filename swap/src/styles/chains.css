@@ -1,0 +1,217 @@
+.all__category__filter select,
+.all__items__filter select,
+.filter__right select {
+  padding: 8px 25px;
+  font-size: 0.9rem;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: #343444;
+  border-radius: 5px;
+}
+
+.input__item input {
+  width: 100%;
+  border: 1px solid rgba(221, 221, 221, 0.274);
+  background: transparent;
+  color: #fff;
+  padding: 9px 25px;
+  border-radius: 5px;
+  outline: none;
+  font-size: 0.8rem;
+}
+
+.hidden {
+  display: none;
+}
+
+#desc {
+  padding-top: 20px;
+  padding-bottom: 15px;
+  text-align: center;
+  border: 3px dotted rgb(224, 152, 19);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+h4 {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.bnbchain {
+  background-color: #f5c651;
+}
+
+.ethchain {
+  background-color: #5475cb;
+}
+
+.polychain {
+  background-color: #8e59e7;
+}
+
+.ftmchain {
+  background-color: #932ce6;
+}
+
+#search_zone {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#search_icon {
+  width: 32px;
+  position: absolute;
+  margin-left: 10px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 435px) {
+  #it_contractNumber,
+  #it_address {
+    width: 100%;
+    background-color: transparent;
+    height: 40px;
+    color: #fff;
+    padding-left: 35px;
+    font-size: 0.88rem;
+  }
+
+  #label_contractNumber {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+    width: 32px;
+    margin-top: 8px;
+    float: left;
+    padding-right: 10px;
+    font-weight: bold;
+  }
+
+  #search_zone {
+    width: 98%;
+  }
+
+  h4 {
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+
+  #bt_check:disabled,
+  #bt_check_eth:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  #bt_check {
+    box-shadow: 0px 1px 0px 0px #fff6af;
+    background: linear-gradient(to bottom, #ffab23 5%, #ffab23 100%);
+    background-color: #ffab23;
+    border-radius: 6px;
+    border: 1px solid #ffaa22;
+    display: inline-block;
+    cursor: pointer;
+    color: #333333;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffab23;
+    /*width: 33%;*/
+    margin-top: 2px;
+  }
+
+  #bt_check_div {
+    margin-top: 5px;
+  }
+
+  #bt_check:hover {
+    background: linear-gradient(to bottom, #e2961d 5%, #e2961d 100%);
+    background-color: #e2961d;
+  }
+
+  #bt_check:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+@media (min-width: 951px) {
+  #label_contractNumber {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+    width: 32px;
+    margin-top: 8px;
+    float: left;
+    padding-right: 10px;
+    font-weight: bold;
+  }
+
+  #bt_check:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  #bt_check {
+    box-shadow: 0px 1px 0px 0px #fff6af;
+    background: linear-gradient(to bottom, #ffab23 5%, #ffab23 100%);
+    background-color: #ffab23;
+    border-radius: 6px;
+    border: 1px solid #ffaa22;
+    display: inline-block;
+    cursor: pointer;
+    color: #333333;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffab23;
+    /*width: 33%;*/
+    margin-top: 2px;
+  }
+
+  #it_contractNumber,
+  #it_address {
+    width: 500px;
+    height: 40px;
+    float: left;
+    background-color: transparent;
+    color: #fff;
+    padding-left: 40px;
+  }
+
+  #bt_check_div,
+  #bt_check_eth_div {
+    float: left;
+    /*width: 120px;*/
+    margin-left: 5px;
+  }
+
+  #bt_check:hover {
+    background: linear-gradient(to bottom, #e2961d 5%, #e2961d 100%);
+    background-color: #e2961d;
+  }
+
+  #bt_check:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+input#it_contractNumber {
+  border: 2px solid darkorange;
+  border-radius: 5px;
+}
+
+input#it_contractNumber:focus {
+  outline: 2px dashed darkorange;
+  border-radius: 5px;
+  border: none;
+}
