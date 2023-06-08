@@ -1,4 +1,4 @@
-import React, {useRef, useEffect } from "react";
+import React, {useRef, useEffect, useState } from "react";
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 import "../styles/swap.css";
@@ -7,6 +7,8 @@ import "../styles/swap.css";
 
         const adressRef = useRef("");
         const amountRef = useRef("");
+
+        const [tokenState, setTokenState] = useState("LINK");
     
         const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,7 +26,7 @@ import "../styles/swap.css";
             <Container>
                 <Row>
                 <Col lg='6' md='6' className="m-auto text-center">
-                    <h2>Please type address</h2>
+                    <h1>Add Collection</h1>
                     <div className="contact mt-4">
                     <form onSubmit={handleSubmit}>
                         <div className="form_input">
@@ -33,25 +35,7 @@ import "../styles/swap.css";
                             placeholder='Type Address:' 
                             ref={adressRef}
                         />
-                        </div>
-    
-                        <div className="row currencyInput">
-                                    <div className="col-md-6 numberContainer">
-                                        <input
-                                            className="currencyInputField"
-                                            placeholder="0.0"
-                                        />
-                                    </div>
-                                    <div className="col-md-6 tokenContainer">
-                                        <span className="tokenName">LINK</span>
-                                        <div className="balanceContainer">
-                                            <span className="balanceAmount">
-                                                Balance:{" "}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-    
+                        </div>  
                         <div className="form_input">
                         <input 
                             type="text" 
@@ -59,14 +43,32 @@ import "../styles/swap.css";
                             ref={amountRef}
                         />
                         </div>
+                        <div className="token_input">
+                            <p className="token_input_describe">Choose type token</p>
+                            <select
+                                className="token_input_custom"
+                                value={tokenState}
+                                onChange={(e) => {
+                                    const selectedToken = e.target.value;
+                                    setTokenState(selectedToken);
+                                }}
+                            >
+                                <option value="LINK">LINK</option>
+                                <option value="ETH">ETH</option>
+                            </select>
+                            <br/><br/>
+                            {tokenState}
+                            </div>
     
                         <button 
                         className="send__btn" 
                         style={{
                             border:'none', 
-                            padding:'7px 25px', 
+                            padding:'7px 15px', 
                             borderRadius:'5px',
                             marginTop:'20px',
+                            background: '#495057',
+                            color: '#fff'
                         }}
                         >
                         Confirm
@@ -80,5 +82,4 @@ import "../styles/swap.css";
         </>
         );
     };
-    
     export default Admin;
