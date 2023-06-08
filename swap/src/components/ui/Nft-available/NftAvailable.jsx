@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-import "./nft-available.css";
+import { getCurrentWalletConnected } from "../../../util/alchemy-core";
+import { getWalletNFTs } from "../../../util/alchemy-nft";
 import NftCard from "../Nft-card/NftCard";
+import "./nft-available.css";
 
 const NftAvailable = () => {
-  const [sales, setSales] = useState([]);
+  const [userNFTs, setUserNFTs] = useState([]);
 
-  async function fetchSales() {
-    // let data = await nftMarketplace.getSales();
-    setSales(['orange', 'apple', 'watermelon', 'melon']);
+  async function fetchAllUserNFTs() {
+    const { address } = await getCurrentWalletConnected();
+
+    if (address.length > 0) {
+      let nfts = await getWalletNFTs(address);
+      console.log(nfts)
+      setUserNFTs(nfts.ownedNfts)
+    }
   }
 
   useEffect(() => {
-    fetchSales();
+    fetchAllUserNFTs();
   }, []);
 
   return (
@@ -29,10 +36,9 @@ const NftAvailable = () => {
             </div>
           </Col>
 
-          {sales?.slice(0, 4).map((item) => (
-            <Col lg="3" key={item}>
-              <NftCard
-              />
+          {userNFTs?.map((nftData) => (
+            <Col lg="3">
+              <NftCard nftData={nftData} />
             </Col>
           ))}
         </Row>

@@ -29,11 +29,11 @@ const NftSwapped = ({ isSignedIn, nftMarketplace, wallet }) => {
             </div>
           </Col>
 
-          {sales?.slice(0, 4).map((item) => (
+          {/* {sales?.slice(0, 4).map((item) => (
             <Col lg="3" key={item}>
               <NftCard />
             </Col>
-          ))}
+          ))} */}
         </Row>
       </Container>
     </section>

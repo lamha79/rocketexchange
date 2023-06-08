@@ -5,7 +5,7 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import Home from "../pages/Home"
 import RocketSwap from "../pages/RocketSwap"
 import Contact from "../pages/Contact"
-import NftStacking from "../pages/NftStacking"
+import NftStaking from "../pages/NftStaking"
 import Admin from "../pages/Admin"
 
 const Routers = () => {
@@ -15,7 +15,7 @@ const Routers = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/swap" element={<RocketSwap />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/stacking" element={<NftStacking />} />
+            <Route path="/staking" element={<NftStaking />} />
             <Route path="/admin" element={<Admin />} />
         </Routes>
     )

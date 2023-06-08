@@ -55,7 +55,7 @@ const Header = () => {
                           <Link to='/home'>Home</Link>
                         </li>
                         <li className="menu-item">
-                          <Link to='/stacking'>NFT Stacking</Link>
+                          <Link to='/staking'>NFT Staking</Link>
                         </li>
                         <li className="menu-item">
                           <Link to='/swap'>Swap</Link>

@@ -6,7 +6,7 @@ import NftAvailable from "../components/ui/Nft-available/NftAvailable";
 import NftSwapped from "../components/ui/Nft-swapped/NftSwapped";
 
 
-const NftStacking = () => {
+const NftStaking = () => {
     useEffect(() => {
         // 👇️ scroll to top on page load
         window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
@@ -14,7 +14,7 @@ const NftStacking = () => {
 
     return (
         <>
-            <CommonSection title={"NFT Stacking"} slogan={"Please send your NFT here to receive 1 token"} />            
+            <CommonSection title={"NFT Staking"} slogan={"Please send your NFT here to receive 1 token"} />            
             <NftAvailable/>
             <NftSwapped />
         </>
@@ -22,4 +22,4 @@ const NftStacking = () => {
     )
 }
 
-export default NftStacking
+export default NftStaking
