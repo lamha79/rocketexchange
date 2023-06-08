@@ -30,6 +30,7 @@ import "../styles/swap.css";
                     <div className="contact mt-4">
                     <form onSubmit={handleSubmit}>
                         <div className="form_input">
+                        <p className="token_input_describe">Address Collection:</p>
                         <input 
                             type="text" 
                             placeholder='Type Address:' 
@@ -37,27 +38,27 @@ import "../styles/swap.css";
                         />
                         </div>  
                         <div className="form_input">
+                        <p className="token_input_describe">Amount:</p>
                         <input 
                             type="text" 
-                            placeholder='Amount' 
+                            placeholder='Amount:' 
                             ref={amountRef}
                         />
                         </div>
                         <div className="token_input">
-                            <p className="token_input_describe">Choose type token</p>
+                            <p className="token_input_describe">Token:</p>
                             <select
                                 className="token_input_custom"
-                                value={tokenState}
+                                //value={tokenState}
                                 onChange={(e) => {
                                     const selectedToken = e.target.value;
                                     setTokenState(selectedToken);
                                 }}
                             >
-                                <option value="LINK">LINK</option>
-                                <option value="ETH">ETH</option>
+                                <option>LINK</option>
+                                <option>ETH</option>
                             </select>
                             <br/><br/>
-                            {tokenState}
                             </div>
     
                         <button 
@@ -67,7 +68,7 @@ import "../styles/swap.css";
                             padding:'7px 15px', 
                             borderRadius:'5px',
                             marginTop:'20px',
-                            background: '#495057',
+                            background:"rgb(86, 90, 105)",
                             color: '#fff'
                         }}
                         >

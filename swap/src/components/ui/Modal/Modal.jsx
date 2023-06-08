@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import teamv04 from "../images/team-v04.png"
 import "./modal.css";
 
-const Modal = ({ setShowModal }) => {
+const Modal = ({ nftData, setShowModal }) => {
+
+  console.log(nftData)
 
   return (
     <div className="modal__wrapper">
@@ -10,11 +11,11 @@ const Modal = ({ setShowModal }) => {
         <h6 className="text-center text-light">Do you want to swap this NFT to get 10 LINKs?</h6>
 
         <div className="a">
-          <img src={teamv04} alt="" className="nft__img"/>
+          <img src={nftData.rawMetadata.image} alt="" className="nft__img"/>
         </div>
 
         <span className="close__modal">
-          <i className="ri-close-line" onClick={() => setShowModal(false)}>X</i>
+          <div className="ri-close-line" onClick={() => setShowModal(false)}>X</div>
         </span>
 
         <button

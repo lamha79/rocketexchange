@@ -50,6 +50,7 @@ const NftCard = ({ nftData }) => {
 
       {showModal && (
         <Modal
+          nftData={nftData}
           setShowModal={setShowModal}
         />
       )}

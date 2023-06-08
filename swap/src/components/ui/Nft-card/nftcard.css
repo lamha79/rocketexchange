@@ -24,6 +24,8 @@
   justify-content: center;
   margin-top: 10em;
   margin-bottom: 10em;
+  margin-left: 2em;
+  margin-right: 2em;
 }
 .nftcard {
   background-color: var(--Very-dark-blue-card-BG);
@@ -78,6 +80,9 @@
   font-size: 1.2rem;
   color: var(--White);
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .nfttitle:hover {
   color: var(--Cyan);

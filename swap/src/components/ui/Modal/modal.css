@@ -68,7 +68,9 @@
 .nft__img{
   width: 70%;
   height: 70%;
-  padding: 2em;
+  padding: 1em;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 .close__modal {
@@ -78,11 +80,15 @@
   z-index: 6666666;
 }
 
-.close__modal i {
+.close__modal div {
   padding: 10px;
   background: #5142fc;
   color: #fff;
-  border-radius: 50%;
+  border-radius: 100%;
+}
+
+.a{
+  text-align: center;
 }
 
 @media only screen and (max-width: 800px) {
