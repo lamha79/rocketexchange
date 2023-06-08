@@ -1,73 +1,197 @@
-import React, { useEffect } from "react"
+import { useState, useEffect } from "react"
+import { ethers } from "ethers"
+import { GearFill } from "react-bootstrap-icons"
 
 import CommonSection from "../components/ui/Common-section/CommonSection"
-import { Container, Row, Col } from "reactstrap"
-import "../styles/swap.css";
+import "../styles/swap.css"
+import PageButton from "../components/PageButton"
+import ConnectButton from "../components/ConnectButton"
+import ConfigModal from "../components/ConfigModal"
+import CurrencyField from "../components/CurrencyField"
+// import detectEthereumProvider from "@metamask/detect-provider";
+
+import BeatLoader from "react-spinners/BeatLoader"
+import {
+    getWethContract,
+    getUniContract,
+    getPrice,
+    runSwap,
+} from "../AlphaRouterService"
+
+import { callPriceFeed } from "../CallPriceFeedChainlink"
 
 const RocketSwap = () => {
+    const [provider, setProvider] = useState(undefined)
+    const [signer, setSigner] = useState(undefined)
+    const [signerAddress, setSignerAddress] = useState(undefined)
+
+    const [slippageAmount, setSlippageAmount] = useState(2)
+    const [deadlineMinutes, setDeadlineMinutes] = useState(10)
+    const [showModal, setShowModal] = useState(undefined)
+
+    const [inputAmount, setInputAmount] = useState(undefined)
+    const [outputAmount, setOutputAmount] = useState(undefined)
+    const [transaction, setTransaction] = useState(undefined)
+    const [loading, setLoading] = useState(undefined)
+    const [ratio, setRatio] = useState(undefined)
+    const [wethContract, setWethContract] = useState(undefined)
+    const [uniContract, setUniContract] = useState(undefined)
+    const [wethAmount, setWethAmount] = useState(undefined)
+    const [uniAmount, setUniAmount] = useState(undefined)
+
     useEffect(() => {
         // 👇️ scroll to top on page load
         window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+
+        const onLoad = async () => {
+            const wethContract = getWethContract()
+            setWethContract(wethContract)
+
+            const uniContract = getUniContract()
+            setUniContract(uniContract)
+        }
+        onLoad()
     }, [])
+
+    const getSigner = async () => {
+        try {
+            if (window.ethereum) {
+                const provider = new ethers.providers.Web3Provider(
+                    window.ethereum
+                )
+                await provider.send("eth_requestAccounts", [])
+                const providerAccounts = await provider.listAccounts()
+                const signer = provider.getSigner()
+                setProvider(provider)
+                setSigner(signer)
+
+                const walletAddress = providerAccounts[0]
+                setSignerAddress(walletAddress)
+            } else {
+                console.error(
+                    "Failed connecting to wallet, no ethereum found in your browser, please use the latest version of firefox browser or chromium browsers."
+                )
+            }
+
+            // provider.send("eth_requestAccounts", []);
+            // const signer = await provider.getSigner();
+        } catch (err) {
+            console.log(`ERROR :::: `, err)
+            console.log("Please install MetaMask!")
+            // window.location.href = "https://metamask.io/";
+
+            if (
+                err.message ===
+                "Already processing eth_requestAccounts. Please wait."
+            ) {
+                window.ethereum.request({
+                    method: "wallet_requestPermissions",
+                    params: [{ eth_accounts: {} }],
+                })
+            }
+        }
+    }
+    const isConnected = () => signer !== undefined
+    const getWalletAddress = () => {
+        signer.getAddress().then((address) => {
+            setSignerAddress(address)
+
+            // todo: connect weth and uni contracts
+            wethContract.balanceOf(address).then((res) => {
+                setWethAmount(Number(ethers.utils.formatEther(res)))
+            })
+            uniContract.balanceOf(address).then((res) => {
+                setUniAmount(Number(ethers.utils.formatEther(res)))
+            })
+        })
+    }
+
+    if (signer !== undefined) {
+        getWalletAddress()
+    }
+
+    const getSwapPrice = (inputAmount) => {
+        setLoading(true)
+        setInputAmount(inputAmount)
+
+        console.log(`Deadline Minutes :::: `, deadlineMinutes)
+
+        callPriceFeed(inputAmount).then((data) => {
+            console.log(`DATA :::: `,data);
+            setOutputAmount(data)
+            setRatio(data)
+            setLoading(false)
+        })
+    }
 
     return (
         <>
-            <CommonSection title={"Rocket swap NFT Liquidity 2.0"} slogan={"Exchange Tokens Easy And Fast In Seconds"} />
+            <CommonSection
+                title={"Rocket swap NFT Liquidity 2.0"}
+                slogan={"Exchange Tokens Easy And Fast In Seconds"}
+            />
 
             <section className="blog-page-2">
-                <div className="body">
+                <div className="appBody">
                     <div className="swapContainer">
                         <div className="swapHeader">
                             <span className="swapText">Swap</span>
-                            <span className="gearContainer">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 16 16"
-                                    width="1em"
-                                    height="1em"
-                                    fill="currentColor"
-                                >
-                                    <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"></path>
-                                </svg>
+                            <span
+                                className="gearContainer"
+                                onClick={() => setShowModal(true)}
+                            >
+                                <GearFill />
                             </span>
+                            {showModal && (
+                                <ConfigModal
+                                    onClose={() => setShowModal(false)}
+                                    setDeadlineMinutes={setDeadlineMinutes}
+                                    deadlineMinutes={deadlineMinutes}
+                                    setSlippageAmount={setSlippageAmount}
+                                    slippageAmount={slippageAmount}
+                                />
+                            )}
                         </div>
+
                         <div className="swapBody">
-                            <div className="row currencyInput">
-                                <div className="col-md-6 numberContainer">
-                                    <input
-                                        className="currencyInputField"
-                                        placeholder="0.0"
-                                    />
-                                </div>
-                                <div className="col-md-6 tokenContainer">
-                                    <span className="tokenName">WETH</span>
-                                    <div className="balanceContainer">
-                                        <span className="balanceAmount">
-                                            Balance:{" "}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row currencyInput">
-                                <div className="col-md-6 numberContainer">
-                                    <input
-                                        className="currencyInputField"
-                                        placeholder="0.0"
-                                    />
-                                </div>
-                                <div className="col-md-6 tokenContainer">
-                                    <span className="tokenName">UNI</span>
-                                    <div className="balanceContainer">
-                                        <span className="balanceAmount">
-                                            Balance:{" "}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <CurrencyField
+                                field="input"
+                                tokenName="WETH"
+                                getSwapPrice={getSwapPrice}
+                                signer={signer}
+                                balance={wethAmount}
+                            />
+                            <CurrencyField
+                                field="output"
+                                tokenName="UNI"
+                                value={outputAmount}
+                                signer={signer}
+                                balance={uniAmount}
+                                spinner={BeatLoader}
+                                loading={loading}
+                            />
                         </div>
-                        <div className="ratioContainer"></div>
+
+                        <div className="ratioContainer">
+                            {ratio && <>{`1 UNI = ${ratio} WETH`}</>}
+                        </div>
+
                         <div className="swapButtonContainer">
-                            <div className="swapButton">Connect Wallet</div>
+                            {isConnected() ? (
+                                <div
+                                    onClick={() => runSwap(transaction, signer)}
+                                    className="swapButton"
+                                >
+                                    Swap
+                                </div>
+                            ) : (
+                                <div
+                                    onClick={() => getSigner(provider)}
+                                    className="swapButton"
+                                >
+                                    Connect Wallet
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
