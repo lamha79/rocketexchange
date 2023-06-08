@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import CommonSection from "../components/ui/Common-section/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 
-import NftCard from "../components/ui/Nft-card/NftCard";
+import NftAvailable from "../components/ui/Nft-available/NftAvailable";
+import NftSwapped from "../components/ui/Nft-swapped/NftSwapped";
 
 
 const NftStacking = () => {
@@ -14,7 +15,8 @@ const NftStacking = () => {
     return (
         <>
             <CommonSection title={"NFT Stacking"} slogan={"Please send your NFT here to receive 1 token"} />            
-            <NftCard/>
+            <NftAvailable/>
+            <NftSwapped />
         </>
         
     )
