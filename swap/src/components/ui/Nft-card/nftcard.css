@@ -91,6 +91,9 @@
   color: var(--Soft-blue);
   line-height: 30px;
   font-weight: 300;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .nfticons {
   display: flex;
