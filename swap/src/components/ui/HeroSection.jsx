@@ -12,9 +12,8 @@ const HeroSection = () => {
         <Row>
           <Col lg="6" md="6">
             <div className="hero__content">
-              {}
               <h2>
-                Description{" "}
+              <span>DeFi Rocket Swap NFT Liquidity 2.0</span>{" "}
               </h2>
               <p>
                 On our platform, users can stake NFT for quick tokens. 
