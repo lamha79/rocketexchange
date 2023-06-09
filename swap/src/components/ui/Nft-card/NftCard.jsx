@@ -41,7 +41,7 @@ const NftCard = ({ nftData }) => {
             <div className="swapBtn">
               <button id="swapButton"
                 onClick={() => setShowModal(true)}>
-                Swap
+                Staking
               </button>
             </div>
           </div>

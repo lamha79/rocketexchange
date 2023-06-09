@@ -18,7 +18,11 @@ const Footer = () => {
                     <Row>
                         <Col lg="12">
                             <div className="content">
-                                <h3 className="">Don't miss out</h3>
+                                <h3 className="footer_sub"
+                                style={{
+                                    color: '#fff'
+                                }}
+                                >Don't miss out</h3>
                                 <form action="#" id="subscribe-form">
                                     <input
                                         type="email"

@@ -254,3 +254,24 @@ body {
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
+
+input::placeholder {
+  opacity: 1;
+  color: #000;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #000;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #000;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #000;
+}
+
+input { 
+  padding-left:3px;
+}

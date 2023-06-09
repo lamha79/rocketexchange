@@ -40,13 +40,13 @@ const RocketSwap = () => {
         setStatus,
         signer,
         setSigner,
-        inputAmount, 
-        setInputAmount, 
-        outputAmount, 
+        inputAmount,
+        setInputAmount,
+        outputAmount,
         setOutputAmount,
-        linkAmount, 
-        setLinkAmount, 
-        wethAmount, 
+        linkAmount,
+        setLinkAmount,
+        wethAmount,
         setWethAmount,
     } = useContext(SigninContext)
 
@@ -151,14 +151,19 @@ const RocketSwap = () => {
     }
 
     const getWalletAddress = () => {
-        console.log(`WALLET ADDRESS :::: `,walletAddress);
-        // todo: connect weth and link contracts
-        wethContract.balanceOf(walletAddress).then((res) => {
-            setWethAmount(Number(ethers.utils.formatEther(res)))
-        })
-        linkContract.balanceOf(walletAddress).then((res) => {
-            setLinkAmount(Number(ethers.utils.formatEther(res)))
-        })
+        console.log(`WALLET ADDRESS :::: `, walletAddress)
+        if (wethContract !== undefined) {
+            // todo: connect weth and link contracts
+            wethContract.balanceOf(walletAddress).then((res) => {
+                setWethAmount(Number(ethers.utils.formatEther(res)))
+            })
+        }
+
+        if(linkContract !== undefined) {
+            linkContract.balanceOf(walletAddress).then((res) => {
+                setLinkAmount(Number(ethers.utils.formatEther(res)))
+            })
+        }
     }
 
     if (signer !== undefined && isConnected) {
@@ -173,8 +178,13 @@ const RocketSwap = () => {
 
         callPriceFeed().then((data) => {
             console.log(`DATA :::: `, data)
-            setOutputAmount(Number(data * inputAmount))
-            setRatio(data)
+            if(Number(inputAmount) > 0) {
+                setOutputAmount(Number(data * inputAmount))
+                setRatio(data)
+            } else {
+                setOutputAmount("")
+                setRatio(0)
+            }
             setLoading(false)
         })
     }
@@ -229,7 +239,7 @@ const RocketSwap = () => {
                         </div>
 
                         <div className="ratioContainer">
-                            {ratio && <>{`1 LINK = ${ratio} WETH`}</>}
+                            {ratio > 0 && <>{`1 LINK = ${ratio} WETH`}</>}
                         </div>
 
                         <div className="swapButtonContainer">

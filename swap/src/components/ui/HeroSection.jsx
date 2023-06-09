@@ -14,30 +14,14 @@ const HeroSection = () => {
             <div className="hero__content">
               {}
               <h2>
-                Free Token Analyzer Program{" "}
-                <span>BNB, ETH, POLY, FTM & DC Chain</span>
+                Description{" "}
               </h2>
               <p>
-                Warning : this website help you to determine if a smart contract
-                could be a scam, without 100% guarantee. We are trying to do our
-                best to detect all the scams but we could not be responsible for
-                a specific malicious one... Always be careful with your money
+                On our platform, users can stake NFT for quick tokens. 
+                After receiving some tokens from NFT staking, 
+                users can use those tokens for numerous purposes, 
+                such as swapping them directly on our built-in swap platform or using them to participate in other crypto market activities.
               </p>
-
-              <div className="hero__btns d-flex align-items-center gap-4">
-                <button className="explore__btn d-flex align-items-center gap-2">
-                  <i className="ri-rocket-line"></i>
-                  <Link to="/bnbchain">BNB Chain</Link>
-                </button>
-                <button className="create__btn d-flex align-items-center gap-2">
-                  <i className="ri-rocket-line"></i>
-                  <Link to="/ethchain">ETH Chain</Link>
-                </button>
-                <button className="create__btn d-flex align-items-center gap-2">
-                  <i className="ri-rocket-line"></i>
-                  <Link to="/polychain">POLY Chain</Link>
-                </button>
-              </div>
             </div>
           </Col>
 

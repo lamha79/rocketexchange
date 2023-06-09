@@ -8,7 +8,7 @@ const Modal = ({ nftData, setShowModal }) => {
   return (
     <div className="modal__wrapper">
       <div className="single__modal">
-        <h6 className="text-center text-light">Do you want to swap this NFT to get 10 LINKs?</h6>
+        <h6 className="text-center text-light">Do you want to staking this NFT to get 2 LINKs?</h6>
 
         <div className="a">
           <img src={nftData.rawMetadata.image} alt="" className="nft__img"/>
@@ -21,7 +21,7 @@ const Modal = ({ nftData, setShowModal }) => {
         <button
           className="place__bid-btn"
         >
-          Swap
+          Staking
         </button>
       </div>
     </div>

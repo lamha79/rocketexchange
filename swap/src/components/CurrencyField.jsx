@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState } from "react";
 
 const CurrencyField = props => {
   const getPrice = (value) => {
     props.getSwapPrice(value)
   }
+
+  const [value, setValue] = useState(0);
+
+  const handleChangeInput = (e) => {
+    e.preventDefault();
+    const { value = "" } = e.target;
+    const parsedValue = value.replace(/[^\d.]/gi, "");
+    setValue(parsedValue);
+    props.getSwapPrice(parsedValue);
+};
 
   return (
     <div className="row currencyInput">
@@ -17,6 +27,7 @@ const CurrencyField = props => {
             className="currencyInputField"
             placeholder="0.0"
             value={props.value}
+            onChange={handleChangeInput}
             onBlur={e => (props.field === 'input' ? getPrice(e.target.value) : null)}
           />
         )}

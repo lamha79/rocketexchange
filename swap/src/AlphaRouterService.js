@@ -81,6 +81,15 @@ export const runSwap = async (transaction, signer) => {
     approvalAmount
   )
 
+  // const transaction = {
+  //   data: route.methodParameters.calldata,
+  //   to: V3_SWAP_ROUTER_ADDRESS,
+  //   value: BigNumber.from(route.methodParameters.value),
+  //   from: walletAddress,
+  //   gasPrice: BigNumber.from(route.gasPriceWei),
+  //   gasLimit: ethers.utils.hexlify(1000000)
+  // }
+  
   signer.sendTransaction(transaction)
 }
 
