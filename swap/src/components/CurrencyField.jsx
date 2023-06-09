@@ -13,7 +13,7 @@ const CurrencyField = props => {
             <props.spinner />
           </div>
         ) : (
-          <input
+          <input 
             className="currencyInputField"
             placeholder="0.0"
             value={props.value}
@@ -24,7 +24,7 @@ const CurrencyField = props => {
       <div className="col-md-6 tokenContainer">
         <span className="tokenName">{props.tokenName}</span>
         <div className="balanceContainer">
-          <span className="balanceAmount">Balance: {props.balance?.toFixed(3)}</span>
+          <span className="balanceAmount">Balance: {props.isConnected ? props.balance.toFixed(3) : Number(0).toFixed(3)}</span>
         </div>
       </div>
     </div>

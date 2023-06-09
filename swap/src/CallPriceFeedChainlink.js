@@ -1,7 +1,7 @@
 const Web3 = require("web3")
 // require("dotenv").config();
 
-export const callPriceFeed = async (inputAmount) => {
+export const callPriceFeed = async () => {
     // async function main() {
     // Configuring the connection to an Ethereum node
     // const network = process.env.ETHEREUM_NETWORK;
@@ -122,5 +122,6 @@ export const callPriceFeed = async (inputAmount) => {
     console.log(`decimalVal :::: `,decimalVal);
     console.log(`priceRatio :::: `,priceRatio);
 
-        return Number((inputAmount / priceRatio).toFixed(2));
+        // return {outputAmount: Number(inputAmount * priceRatio), priceRatio: priceRatio};
+        return priceRatio;
 }

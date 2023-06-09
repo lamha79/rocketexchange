@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { ethers } from "ethers"
 import { GearFill } from "react-bootstrap-icons"
 
@@ -9,35 +9,46 @@ import ConnectButton from "../components/ConnectButton"
 import ConfigModal from "../components/ConfigModal"
 import CurrencyField from "../components/CurrencyField"
 // import detectEthereumProvider from "@metamask/detect-provider";
-
+import { SigninContext } from "../WalletConnectContext"
 import BeatLoader from "react-spinners/BeatLoader"
 import {
     getWethContract,
-    getUniContract,
-    getPrice,
+    getLinkContract,
     runSwap,
 } from "../AlphaRouterService"
 
 import { callPriceFeed } from "../CallPriceFeedChainlink"
 
 const RocketSwap = () => {
-    const [provider, setProvider] = useState(undefined)
-    const [signer, setSigner] = useState(undefined)
-    const [signerAddress, setSignerAddress] = useState(undefined)
-
     const [slippageAmount, setSlippageAmount] = useState(2)
     const [deadlineMinutes, setDeadlineMinutes] = useState(10)
     const [showModal, setShowModal] = useState(undefined)
 
-    const [inputAmount, setInputAmount] = useState(undefined)
-    const [outputAmount, setOutputAmount] = useState(undefined)
     const [transaction, setTransaction] = useState(undefined)
     const [loading, setLoading] = useState(undefined)
     const [ratio, setRatio] = useState(undefined)
     const [wethContract, setWethContract] = useState(undefined)
-    const [uniContract, setUniContract] = useState(undefined)
-    const [wethAmount, setWethAmount] = useState(undefined)
-    const [uniAmount, setUniAmount] = useState(undefined)
+    const [linkContract, setLinkContract] = useState(undefined)
+
+    const {
+        isConnected,
+        setIsConnected,
+        provider,
+        setProvider,
+        walletAddress,
+        setWalletAddress,
+        setStatus,
+        signer,
+        setSigner,
+        inputAmount, 
+        setInputAmount, 
+        outputAmount, 
+        setOutputAmount,
+        linkAmount, 
+        setLinkAmount, 
+        wethAmount, 
+        setWethAmount,
+    } = useContext(SigninContext)
 
     useEffect(() => {
         // 👇️ scroll to top on page load
@@ -47,8 +58,8 @@ const RocketSwap = () => {
             const wethContract = getWethContract()
             setWethContract(wethContract)
 
-            const uniContract = getUniContract()
-            setUniContract(uniContract)
+            const linkContract = getLinkContract()
+            setLinkContract(linkContract)
         }
         onLoad()
     }, [])
@@ -56,25 +67,51 @@ const RocketSwap = () => {
     const getSigner = async () => {
         try {
             if (window.ethereum) {
-                const provider = new ethers.providers.Web3Provider(
-                    window.ethereum
-                )
-                await provider.send("eth_requestAccounts", [])
-                const providerAccounts = await provider.listAccounts()
-                const signer = provider.getSigner()
-                setProvider(provider)
-                setSigner(signer)
+                if (provider == null) {
+                    let _provider = new ethers.providers.Web3Provider(
+                        window.ethereum
+                    )
+                    await _provider.send("eth_requestAccounts", [])
+                    const providerAccounts = await _provider.listAccounts()
+                    const signer = _provider.getSigner()
+                    setProvider(_provider)
+                    setSigner(signer)
 
-                const walletAddress = providerAccounts[0]
-                setSignerAddress(walletAddress)
+                    if (
+                        providerAccounts !== undefined &&
+                        providerAccounts.length > 0
+                    ) {
+                        const walletAddress = providerAccounts[0]
+                        setWalletAddress(walletAddress)
+                        setStatus("Success")
+                        setIsConnected(true)
+                    } else {
+                        setWalletAddress("")
+                        setStatus(
+                            "🦊 Connect to Metamask using the top right button."
+                        )
+                        setProvider(null)
+                        setIsConnected(false)
+                    }
+                } else {
+                    const signer = provider.getSigner()
+                    setSigner(signer)
+
+                    setWalletAddress(walletAddress)
+                    setStatus("Connected")
+                    setIsConnected(false)
+                }
             } else {
                 console.error(
                     "Failed connecting to wallet, no ethereum found in your browser, please use the latest version of firefox browser or chromium browsers."
                 )
+                setWalletAddress("")
+                setStatus(
+                    "🦊 Failed connecting to wallet, no ethereum found in your browser, please use the latest version of firefox browser or chromium browsers."
+                )
+                setProvider(null)
+                setIsConnected(false)
             }
-
-            // provider.send("eth_requestAccounts", []);
-            // const signer = await provider.getSigner();
         } catch (err) {
             console.log(`ERROR :::: `, err)
             console.log("Please install MetaMask!")
@@ -84,29 +121,47 @@ const RocketSwap = () => {
                 err.message ===
                 "Already processing eth_requestAccounts. Please wait."
             ) {
-                window.ethereum.request({
-                    method: "wallet_requestPermissions",
-                    params: [{ eth_accounts: {} }],
-                })
+                setWalletAddress("")
+                setStatus(
+                    "Already processing eth_requestAccounts. Please wait."
+                )
+                setProvider(null)
+                setIsConnected(false)
             }
+
+            setWalletAddress("")
+            setStatus(
+                <span>
+                    <p>
+                        {" "}
+                        🦊{" "}
+                        <a
+                            target="_blank"
+                            href={`https://metamask.io/download.html`}
+                        >
+                            You must install Metamask, a virtual Ethereum
+                            wallet, in your browser.
+                        </a>
+                    </p>
+                </span>
+            )
+            setProvider(null)
+            setIsConnected(false)
         }
     }
-    const isConnected = () => signer !== undefined
-    const getWalletAddress = () => {
-        signer.getAddress().then((address) => {
-            setSignerAddress(address)
 
-            // todo: connect weth and uni contracts
-            wethContract.balanceOf(address).then((res) => {
-                setWethAmount(Number(ethers.utils.formatEther(res)))
-            })
-            uniContract.balanceOf(address).then((res) => {
-                setUniAmount(Number(ethers.utils.formatEther(res)))
-            })
+    const getWalletAddress = () => {
+        console.log(`WALLET ADDRESS :::: `,walletAddress);
+        // todo: connect weth and link contracts
+        wethContract.balanceOf(walletAddress).then((res) => {
+            setWethAmount(Number(ethers.utils.formatEther(res)))
+        })
+        linkContract.balanceOf(walletAddress).then((res) => {
+            setLinkAmount(Number(ethers.utils.formatEther(res)))
         })
     }
 
-    if (signer !== undefined) {
+    if (signer !== undefined && isConnected) {
         getWalletAddress()
     }
 
@@ -116,9 +171,9 @@ const RocketSwap = () => {
 
         console.log(`Deadline Minutes :::: `, deadlineMinutes)
 
-        callPriceFeed(inputAmount).then((data) => {
-            console.log(`DATA :::: `,data);
-            setOutputAmount(data)
+        callPriceFeed().then((data) => {
+            console.log(`DATA :::: `, data)
+            setOutputAmount(Number(data * inputAmount))
             setRatio(data)
             setLoading(false)
         })
@@ -156,28 +211,29 @@ const RocketSwap = () => {
                         <div className="swapBody">
                             <CurrencyField
                                 field="input"
-                                tokenName="WETH"
+                                tokenName="LINK"
+                                value={inputAmount}
                                 getSwapPrice={getSwapPrice}
-                                signer={signer}
-                                balance={wethAmount}
+                                isConnected={isConnected}
+                                balance={linkAmount}
                             />
                             <CurrencyField
                                 field="output"
-                                tokenName="UNI"
+                                tokenName="WETH"
                                 value={outputAmount}
-                                signer={signer}
-                                balance={uniAmount}
+                                isConnected={isConnected}
+                                balance={wethAmount}
                                 spinner={BeatLoader}
                                 loading={loading}
                             />
                         </div>
 
                         <div className="ratioContainer">
-                            {ratio && <>{`1 UNI = ${ratio} WETH`}</>}
+                            {ratio && <>{`1 LINK = ${ratio} WETH`}</>}
                         </div>
 
                         <div className="swapButtonContainer">
-                            {isConnected() ? (
+                            {isConnected ? (
                                 <div
                                     onClick={() => runSwap(transaction, signer)}
                                     className="swapButton"
@@ -186,7 +242,7 @@ const RocketSwap = () => {
                                 </div>
                             ) : (
                                 <div
-                                    onClick={() => getSigner(provider)}
+                                    onClick={() => getSigner()}
                                     className="swapButton"
                                 >
                                     Connect Wallet

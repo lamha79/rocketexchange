@@ -1,4 +1,5 @@
-import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import { createAlchemyWeb3 } from "@alch/alchemy-web3"
+import { ethers } from "ethers"
 
 const alchemyKey = process.env.REACT_APP_ALCHEMY_GOERLI_RPC_URL
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
@@ -20,12 +21,14 @@ export const connectWallet = async () => {
             const obj = {
                 status: "Success",
                 address: addressArray[0],
+                isConnected: true,
             }
             return obj
         } catch (err) {
             return {
                 address: "",
                 status: "😥 " + err.message,
+                isConnected: false,
             }
         }
     } else {
@@ -46,6 +49,7 @@ export const connectWallet = async () => {
                     </p>
                 </span>
             ),
+            isConnected: true,
         }
     }
 }
@@ -60,17 +64,20 @@ export const getCurrentWalletConnected = async () => {
                 return {
                     address: addressArray[0],
                     status: "Connected",
+                    isConnected: true,
                 }
             } else {
                 return {
                     address: "",
                     status: "🦊 Connect to Metamask using the top right button.",
+                    isConnected: false,
                 }
             }
         } catch (err) {
             return {
                 address: "",
                 status: "😥 " + err.message,
+                isConnected: false,
             }
         }
     } else {
@@ -91,6 +98,149 @@ export const getCurrentWalletConnected = async () => {
                     </p>
                 </span>
             ),
+            isConnected: true,
+        }
+    }
+}
+
+export const connectWalletSync = async (provider) => {
+    if (window.ethereum) {
+        try {
+            if (provider == null || provider === undefined) {
+                let _provider = new ethers.providers.Web3Provider(
+                    window.ethereum
+                )
+                await _provider.send("eth_requestAccounts", [])
+                let _signer = _provider.getSigner()
+                const providerAccounts = await _provider.listAccounts()
+                const walletAddress = providerAccounts[0]
+                const obj = {
+                    status: "Success",
+                    address: walletAddress,
+                    isConnected: true,
+                    provider: _provider,
+                    signer: _signer,
+                }
+                return obj
+            } else {
+                const providerAccounts = await provider.listAccounts();
+                const walletAddress = providerAccounts[0];
+                const _signer = provider.getSigner();
+                    const obj = {
+                        status: "Connected",
+                        address: walletAddress,
+                        isConnected: true,
+                        provider: provider,
+                        signer: _signer,
+                    }
+                    return obj
+            }
+        } catch (err) {
+            return {
+                address: "",
+                status: "😥 " + err.message,
+                isConnected: false,
+                provider: null,
+                signer: null,
+            }
+        }
+    } else {
+        return {
+            address: "",
+            status: (
+                <span>
+                    <p>
+                        {" "}
+                        🦊{" "}
+                        <a
+                            target="_blank"
+                            href={`https://metamask.io/download.html`}
+                        >
+                            You must install Metamask, a virtual Ethereum
+                            wallet, in your browser.
+                        </a>
+                    </p>
+                </span>
+            ),
+            isConnected: false,
+            provider: null,
+            signer: null,
+        }
+    }
+}
+
+export const getCurrentWalletConnectedSync = async (provider) => {
+    if (window.ethereum) {
+        try {
+            if (provider == null) {
+                let _provider = new ethers.providers.Web3Provider(
+                    window.ethereum
+                )
+                await _provider.send("eth_requestAccounts", [])
+                const providerAccounts = await _provider.listAccounts()
+                if (
+                    providerAccounts !== undefined &&
+                    providerAccounts.length > 0
+                ) {
+                    const walletAddress = providerAccounts[0]
+                    return {
+                        address: walletAddress,
+                        status: "Success",
+                        isConnected: true,
+                        provider: _provider,
+                        signer: _provider.getSigner(),
+                    }
+                } else {
+                    return {
+                        address: "",
+                        status: "🦊 Connect to Metamask using the top right button.",
+                        isConnected: false,
+                        provider: null,
+                        signer: null,
+                    }
+                }
+            } else {
+                const providerAccounts = await provider.listAccounts()
+                const walletAddress = providerAccounts[0]
+                const obj = {
+                    status: "Connected",
+                    address: walletAddress,
+                    isConnected: true,
+                    provider: provider,
+                    signer: provider.getSigner(),
+                }
+                return obj
+            }
+        } catch (err) {
+            return {
+                address: "",
+                status: "😥 " + err.message,
+                isConnected: false,
+                provider: null,
+                signer: null,
+            }
+        }
+    } else {
+        return {
+            address: "",
+            status: (
+                <span>
+                    <p>
+                        {" "}
+                        🦊{" "}
+                        <a
+                            target="_blank"
+                            href={`https://metamask.io/download.html`}
+                        >
+                            You must install Metamask, a virtual Ethereum
+                            wallet, in your browser.
+                        </a>
+                    </p>
+                </span>
+            ),
+            isConnected: false,
+            provider: null,
+            signer: null,
         }
     }
 }
@@ -109,8 +259,7 @@ export const swapNFTToToken = async (address, message) => {
         }
     }
     //set up transaction parameters
-    const transactionParameters = {
-    }
+    const transactionParameters = {}
 
     //sign the transaction
     try {
@@ -119,10 +268,7 @@ export const swapNFTToToken = async (address, message) => {
             params: [transactionParameters],
         })
         return {
-            status: (
-                <span>
-                </span>
-            ),
+            status: <span></span>,
         }
     } catch (error) {
         return {
